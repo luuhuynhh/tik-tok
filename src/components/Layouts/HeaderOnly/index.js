@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '|/components/HeaderOnly/Header'
+import Header from '|/components/Layouts/DefaultLayout/Header'
 
 export default function HeaderOnly({ children }) {
     return (

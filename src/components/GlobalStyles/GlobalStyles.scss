@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+:root {
+    --default-layout-header-height: 60px;
+    --default-layout-width: 1150px;
+    --default-layout-sitebar-width: 355px;
+}
+
 html,
 body {
     font-size: 15px;
