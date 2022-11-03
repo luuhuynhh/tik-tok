@@ -15,8 +15,16 @@
             align-items: center;
         }
 
+        .search-result,
         .search {
             width: 361px;
+        }
+
+        .search-title {
+            color: rgba(109, 110, 116, 0.5);
+        }
+
+        .search {
             height: 46px;
             background: rgba(22, 24, 35, .06);
             display: flex;
@@ -39,7 +47,6 @@
                 font-size: 1.1rem;
                 outline: none;
                 height: 100%;
-
             }
 
             .clear,

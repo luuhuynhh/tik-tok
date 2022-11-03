@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner, faSearch } from '@fortawesome/free-solid-svg-icons';
-// import classNames from "classnames"
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
+import { Wrapper as PoperWrapper } from "|/components/Poper"
+import AccountItem from '|/components/AccountItem';
 
 export default function Header() {
+    const [searchResult, setSearchResult] = useState([]);
+
     return (
         <header className={styles['wrapper']}>
             <div className={styles['inner']}>
@@ -30,16 +35,33 @@ export default function Header() {
                             <rect width="118" height="42" fill="white"></rect></clipPath></defs>
                     </svg>
                 </div>
-                <div className={styles['search']}>
-                    <input placeholder='search account and video' spellCheck={false} />
-                    <button className={styles['clear']}>
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
-                    <FontAwesomeIcon className={styles['loading']} icon={faSpinner} />
-                    <button className={styles['search-btn']}>
-                        <FontAwesomeIcon icon={faSearch} />
-                    </button>
-                </div>
+                <Tippy
+                    // visible={searchResult.length > 0}
+                    render={attr =>
+                    (
+                        <div className={styles['search-result']} {...attr}>
+                            <PoperWrapper width={361}>
+                                <h5 className={styles['search-title']}>Tài khoản</h5>
+                                <div>
+                                    <AccountItem />
+                                </div>
+                            </PoperWrapper>
+                        </div>
+
+                    )
+                    }
+                >
+                    <div className={styles['search']}>
+                        <input placeholder='search account and video' spellCheck={false} />
+                        <button className={styles['clear']}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                        <FontAwesomeIcon className={styles['loading']} icon={faSpinner} />
+                        <button className={styles['search-btn']}>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                    </div>
+                </Tippy>
                 <div className={styles['action']}></div>
             </div>
         </header>
