@@ -3,7 +3,7 @@ import styles from './Button.module.scss'
 import { Link } from 'react-router-dom';
 
 export default function Button({
-    to, href, onClcik,
+    to, href, onClick,
     children,
     primary, outline, text,
     rounded,
@@ -43,18 +43,13 @@ export default function Button({
         classes.push('rounded')
     }
 
-    console.log({ ...props });
-    console.log('style', { ...style.style });
-    console.log('primary', primary);
-    console.log(classes)
-
     const classesString = classes.reduce((classesStr, classItem) => {
         return classesStr += ` ${styles[classItem]}`;
     }, '');
 
     console.log(classesString);
     return (
-        <Com className={`${styles['wrapper']} ${classesString} ${className}`} style={{ ...style.style }} {...props}>
+        <Com className={`${styles['wrapper']} ${classesString} ${className}`} style={{ ...style.style }} {...props} onClick={onClick}>
             {children}
         </Com>
     )

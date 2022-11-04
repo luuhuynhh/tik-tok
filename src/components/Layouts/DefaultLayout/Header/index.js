@@ -12,7 +12,14 @@ import Menu from '|/components/Poper/Menu';
 const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
-        title: 'English'
+        title: 'English',
+        children: {
+            title: 'Languages',
+            data: [
+                { code: 'en', title: 'English' },
+                { code: 'vi', title: 'Vietnamese' },
+            ]
+        }
     },
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
@@ -27,6 +34,10 @@ const MENU_ITEMS = [
 
 export default function Header() {
     const [searchResult, setSearchResult] = useState([]);
+
+    const handleMenuChange = (menuitem) => {
+        console.log(menuitem);
+    }
 
     return (
         <header className={styles['wrapper']}>
@@ -83,7 +94,7 @@ export default function Header() {
                 <div className={styles['action']}>
                     <Button text href='https://www.hcmus.edu.vn/sinh-vien'>Login</Button>
                     <Button primary >Register</Button>
-                    <Menu items={MENU_ITEMS}>
+                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                         <button className={styles['btn-more']}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
