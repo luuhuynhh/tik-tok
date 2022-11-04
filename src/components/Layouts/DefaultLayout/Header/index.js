@@ -6,6 +6,7 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import { Wrapper as PoperWrapper } from "|/components/Poper"
 import AccountItem from '|/components/AccountItem';
+import Button from '|/components/Button';
 
 export default function Header() {
     const [searchResult, setSearchResult] = useState([]);
@@ -62,7 +63,10 @@ export default function Header() {
                         </button>
                     </div>
                 </Tippy>
-                <div className={styles['action']}></div>
+                <div className={styles['action']}>
+                    <Button text href='https://www.hcmus.edu.vn/sinh-vien'>Login</Button>
+                    <Button primary >Register</Button>
+                </div>
             </div>
         </header>
     )
