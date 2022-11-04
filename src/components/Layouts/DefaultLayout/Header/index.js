@@ -8,6 +8,7 @@ import { Wrapper as PoperWrapper } from "|/components/Poper"
 import AccountItem from '|/components/AccountItem';
 import Button from '|/components/Button';
 import Menu from '|/components/Poper/Menu';
+import Image from '|/components/Image';
 
 const MENU_ITEMS = [
     {
@@ -127,7 +128,7 @@ export default function Header() {
                         )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                            <Image style={{ width: '40px', height: '40px', objectFit: 'cover' }}
                                 src={'https://bloganchoi.com/wp-content/uploads/2022/04/jimin-ost2.jpg'}
                                 alt='avatar' />
                         )
