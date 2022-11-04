@@ -44,7 +44,7 @@ export default function Button({
     }
 
     console.log({ ...props });
-    console.log({ ...style });
+    console.log('style', { ...style.style });
     console.log('primary', primary);
     console.log(classes)
 
@@ -54,7 +54,7 @@ export default function Button({
 
     console.log(classesString);
     return (
-        <Com className={`${styles['wrapper']} ${classesString} ${className}`} style={{ ...style }} {...props}>
+        <Com className={`${styles['wrapper']} ${classesString} ${className}`} style={{ ...style.style }} {...props}>
             {children}
         </Com>
     )
