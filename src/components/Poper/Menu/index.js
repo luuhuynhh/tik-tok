@@ -11,11 +11,11 @@ export default function Menu({ children, items, onChange }) {
     const current = history[history.length - 1];
     return (
         <Tippy
-            visible
             interactive
             delay={[0, 1000]}
             // visible={searchResult.length > 0}
             placement='bottom-end'
+            onHidden={() => { setHistory([{ data: items }]) }}
             render={attr =>
             (
                 <div className={styles['search-result']} {...attr}>

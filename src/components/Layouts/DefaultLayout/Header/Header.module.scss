@@ -91,3 +91,19 @@
         }
     }
 }
+
+.actions {
+    display: flex;
+    align-items: center;
+
+    img {
+        border-radius: 50%;
+    }
+
+    .actions-btn {
+        font-size: 1.8rem;
+        padding-right: 1rem;
+        background-color: transparent;
+        cursor: pointer;
+    }
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faSpinner, faSearch, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faSpinner, faSearch, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import { Wrapper as PoperWrapper } from "|/components/Poper"
@@ -38,6 +38,22 @@ export default function Header() {
     const handleMenuChange = (menuitem) => {
         console.log(menuitem);
     }
+
+    const currentUser = true;
+
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+            title: 'View profile',
+            to: '/profile'
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+            title: 'Log out',
+            to: '/logout'
+        }
+    ]
 
     return (
         <header className={styles['wrapper']}>
@@ -76,7 +92,6 @@ export default function Header() {
                                 </div>
                             </PoperWrapper>
                         </div>
-
                     )
                     }
                 >
@@ -91,13 +106,38 @@ export default function Header() {
                         </button>
                     </div>
                 </Tippy>
-                <div className={styles['action']}>
-                    <Button text href='https://www.hcmus.edu.vn/sinh-vien'>Login</Button>
-                    <Button primary >Register</Button>
-                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                        <button className={styles['btn-more']}>
-                            <FontAwesomeIcon icon={faEllipsisVertical} />
-                        </button>
+                <div className={styles['actions']}>
+                    {currentUser ? (
+                        <>
+                            <Tippy content={'Upload video'}>
+                                <button className={styles['actions-btn']}>
+                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                </button>
+                            </Tippy>
+                        </>
+                    )
+                        : (
+
+                            <>
+                                <Button text href='https://www.hcmus.edu.vn/sinh-vien'>Login</Button>
+                                <Button primary >Register</Button>
+
+                            </>
+
+                        )}
+                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {currentUser ? (
+                            <img style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                                src={'https://bloganchoi.com/wp-content/uploads/2022/04/jimin-ost2.jpg'}
+                                alt='avatar' />
+                        )
+                            : (
+
+                                <button className={styles['btn-more']}>
+                                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                                </button>
+
+                            )}
                     </Menu>
                 </div>
             </div>
