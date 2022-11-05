@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner, faSearch, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload } from '@fortawesome/free-solid-svg-icons';
@@ -34,7 +34,11 @@ const MENU_ITEMS = [
 ]
 
 export default function Header() {
+    const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
+    const [showResult, setShowResult] = useState(false);
+
+    const inputRef = useRef();
 
     const handleMenuChange = (menuitem) => {
         console.log(menuitem);
@@ -55,6 +59,10 @@ export default function Header() {
             to: '/logout'
         }
     ]
+
+    const handleHideResult = () => {
+        setShowResult(false);
+    }
 
     return (
         <header className={styles['wrapper']}>
@@ -82,6 +90,8 @@ export default function Header() {
                     </svg>
                 </div>
                 <Tippy
+                    onClickOutside={handleHideResult}
+                    visible={showResult && searchResult.length > 0}
                     interactive
                     render={attr =>
                     (
@@ -97,11 +107,14 @@ export default function Header() {
                     }
                 >
                     <div className={styles['search']}>
-                        <input placeholder='search account and video' spellCheck={false} />
-                        <button className={styles['clear']}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={styles['loading']} icon={faSpinner} />
+                        <input placeholder='search account and video' spellCheck={false} onChange={(e) => setSearchValue(e.target.value)} value={searchValue} ref={inputRef} onFocus={() => setShowResult(true)} />
+                        {
+                            searchValue &&
+                            <button className={styles['clear']} style={{ cursor: 'pointer' }} onClick={() => { setSearchValue(''); inputRef.current.focus(); }}>
+                                <FontAwesomeIcon icon={faCircleXmark} />
+                            </button>
+                        }
+                        {/* <FontAwesomeIcon className={styles['loading']} icon={faSpinner} /> */}
                         <button className={styles['search-btn']}>
                             <FontAwesomeIcon icon={faSearch} />
                         </button>
