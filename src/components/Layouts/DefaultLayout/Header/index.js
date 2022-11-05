@@ -9,6 +9,7 @@ import AccountItem from '|/components/AccountItem';
 import Button from '|/components/Button';
 import Menu from '|/components/Poper/Menu';
 import Image from '|/components/Image';
+import useDebound from '|/components/hooks/useDebound';
 
 const MENU_ITEMS = [
     {
@@ -39,6 +40,8 @@ export default function Header() {
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const deboundValue = useDebound(searchValue, 500);
+
     const inputRef = useRef();
 
     const handleMenuChange = (menuitem) => {
@@ -66,10 +69,10 @@ export default function Header() {
     }
 
     useEffect(() => {
-        if (searchValue.trim()) {
+        if (deboundValue.trim()) {
             setLoading(true);
 
-            fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+            fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(deboundValue)}&type=less`)
                 .then(res => res.json())
                 .then(res => {
                     console.log(res);
@@ -83,7 +86,7 @@ export default function Header() {
             setShowResult(true);
         }
     }
-        , [searchValue])
+        , [deboundValue])
 
     return (
         <header className={styles['wrapper']}>
