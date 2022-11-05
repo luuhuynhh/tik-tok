@@ -59,6 +59,11 @@
                 font-size: 1.1rem;
             }
 
+            .loading {
+                animation: spinner .8s linear infinite;
+            }
+
+
             .search-btn {
                 width: 52px;
                 height: 100%;
@@ -105,5 +110,16 @@
         padding-right: 1rem;
         background-color: transparent;
         cursor: pointer;
+    }
+}
+
+
+@keyframes spinner {
+    from {
+        transform: translateY(-50%) rotate(0);
+    }
+
+    to {
+        transform: translateY(-50%) rotate(360deg);
     }
 }

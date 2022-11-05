@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner, faSearch, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,7 @@ export default function Header() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const inputRef = useRef();
 
@@ -63,6 +64,26 @@ export default function Header() {
     const handleHideResult = () => {
         setShowResult(false);
     }
+
+    useEffect(() => {
+        if (searchValue.trim()) {
+            setLoading(true);
+
+            fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    setLoading(false);
+                    setSearchResult(res?.data);
+                })
+        }
+        if (!searchResult.length) {
+            setShowResult(false);
+        } else {
+            setShowResult(true);
+        }
+    }
+        , [searchValue])
 
     return (
         <header className={styles['wrapper']}>
@@ -97,9 +118,11 @@ export default function Header() {
                     (
                         <div className={styles['search-result']} {...attr}>
                             <PoperWrapper width={361}>
-                                <h5 className={styles['search-title']}>Tài khoản</h5>
+                                <h5 className={styles['search-title']} style={{ paddingLeft: '.5rem' }}>Tài khoản</h5>
                                 <div>
-                                    <AccountItem />
+                                    {searchResult?.map((account) => {
+                                        return <AccountItem key={account.id} account={account} />
+                                    })}
                                 </div>
                             </PoperWrapper>
                         </div>
@@ -109,12 +132,13 @@ export default function Header() {
                     <div className={styles['search']}>
                         <input placeholder='search account and video' spellCheck={false} onChange={(e) => setSearchValue(e.target.value)} value={searchValue} ref={inputRef} onFocus={() => setShowResult(true)} />
                         {
-                            searchValue &&
+                            searchValue && !loading &&
                             <button className={styles['clear']} style={{ cursor: 'pointer' }} onClick={() => { setSearchValue(''); inputRef.current.focus(); }}>
                                 <FontAwesomeIcon icon={faCircleXmark} />
                             </button>
                         }
-                        {/* <FontAwesomeIcon className={styles['loading']} icon={faSpinner} /> */}
+                        {loading && <FontAwesomeIcon className={styles['loading']} icon={faSpinner}
+                        />}
                         <button className={styles['search-btn']}>
                             <FontAwesomeIcon icon={faSearch} />
                         </button>

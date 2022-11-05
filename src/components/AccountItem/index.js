@@ -1,16 +1,20 @@
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import { Link } from 'react-router-dom'
+import Image from '|/components/Image'
 import styles from './AccountItem.module.scss'
 
-export default function AccountItem() {
+export default function AccountItem({ account }) {
     return (
-        <div className={styles['wrapper']}>
-            <img className={styles['avatar']} src='https://bloganchoi.com/wp-content/uploads/2022/04/jimin-ost2.jpg' />
+        <Link to={`/@${account.nickname}`} className={styles['wrapper']} style={{ cursor: 'pointer' }}>
+            <Image className={styles['avatar']} src={account.avatar} alt={account.full_name} />
             <div className={styles['info']}>
-                <p className={styles['name']}><span>Xuân Ý</span><FontAwesomeIcon className={styles['check']} icon={faCheckCircle} /></p>
-                <span className={styles['username']}>ydam.nbk</span>
+                <p className={styles['name']}><span>{account.full_name}</span>
+                    {account.tick && <FontAwesomeIcon className={styles['check']} icon={faCheckCircle} />}
+                </p>
+                <span className={styles['username']}>{account.nickname}</span>
             </div>
-        </div>
+        </Link>
     )
 }
